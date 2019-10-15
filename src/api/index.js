@@ -6,19 +6,20 @@ export default ({ config, db }) => {
 
   api.get("/gettask", (req, res) => {
     //find id in company table and return the company
-    db.query("SELECT * from task_list where status = true", (err, response) => {
+    // "SELECT SUM(points)  from task_list where status = true group by user_id"
+    db.query("SELECT *  from task_list where status = true " , (err, response) => {
       if (err) {
         console.log(err.stack);
       } else {
         console.log(response.rows);
-				res.json({"companies":response.rows});
+				res.json({"response":response.rows});
       }
     });
 
 
   });
-  // perhaps expose some API metadata at the root
-  // api.get("/company/:id", (req, res) => {
+  // perhaps expose some API metadata he root
+  // api.get("/company/:d", (req, res) {
   //   //find id in company table and return the company
   //   db.query(`SELECT * from company where id=${req.params.id}`, (err, response) => {
   //     if (err) {
@@ -40,7 +41,7 @@ export default ({ config, db }) => {
         console.log(err.stack);
       } else {
         console.log(response.rows);
-				res.json({"status":"successfull","response":response.rows});
+				res.json({"response":response.rows});
       }
     });
   });
@@ -58,6 +59,35 @@ export default ({ config, db }) => {
 				res.json({"status":"successfull","response":response.rows});
       }
     });
+  });
+  api.post("/admin_view_task_list", (req, res) => {
+    //take company from req and insert into company table
+    //  console.log("body", req.body);
+    // const {name,address,phonenumber}=req.body;
+    const {month , week}=req.body;
+    db.query(` select * from task_list where month = '${month}' and week = '${week}' and status = true  `, (err, response) => {
+      if (err) {
+        console.log(err.stack);
+      } else {
+        console.log(response.rows);
+				res.json({"response":response.rows});
+      }
+    });
+  });
+  api.post("/get_chart_points", (req, res) => {
+    //find id in company table and return the company
+    // "SELECT SUM(points)  from task_list where status = true group by user_id"
+    const {month , week}=req.body;
+    db.query(`SELECT user_id,SUM(points)  from task_list where  month = '${month}' and week = '${week}' and status = true group by user_id` , (err, response) => {
+      if (err) {
+        console.log(err.stack);
+      } else {
+        console.log(response.rows);
+				res.json({"response":response.rows});
+      }
+    });
+
+
   });
 
   
@@ -85,7 +115,7 @@ export default ({ config, db }) => {
       }
     });
 
-
+      
 
   })
   
