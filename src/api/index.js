@@ -36,7 +36,11 @@ export default ({ config, db }) => {
      console.log("body", req.body);
     // const {name,address,phonenumber}=req.body;
     const {task_name,points,month,week,user_id,task_id}=req.body;
-    db.query(`insert into task_list values('${user_id}','${task_id}','${task_name}',${points},'${month}','${week}','2019', false,true,'10/10/2019, 10:06:30 AM')`, (err, response) => {
+    const uuidv1 = require('uuid/v1');
+         const taskId =  uuidv1();
+       const createdtime = new Date().getTime();  
+       console.log(createdtime, "time stamp")
+    db.query(`insert into task_list values('${user_id}','${taskId}','${task_name}',${points},'${month}','${week}','2019', false,true,${createdtime})`, (err, response) => {
       if (err) {
         console.log(err.stack);
       } else {
