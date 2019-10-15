@@ -35,7 +35,7 @@ export default ({ config, db }) => {
      console.log("body", req.body);
     // const {name,address,phonenumber}=req.body;
     const {task_name,points,month,week,user_id,task_id}=req.body;
-    db.query(`insert into task_list values('${user_id}','${task_id}','${task_name}',${points},'${month}','${week}','2019', false,true)`, (err, response) => {
+    db.query(`insert into task_list values('${user_id}','${task_id}','${task_name}',${points},'${month}','${week}','2019', false,true,'10/10/2019, 10:06:30 AM')`, (err, response) => {
       if (err) {
         console.log(err.stack);
       } else {
@@ -62,8 +62,11 @@ export default ({ config, db }) => {
 
   
   api.put("/delete/:task_id",(req,res)=>{
-    console.log("body",req.body)
-    db.query(`UPDATE task_list SET status = NOT status WHERE task_id = ${req.params.task_id}`, (err, response) => {
+    console.log (req,"inputtttt")
+    console.log(typeof(req.params.task_id))
+    
+console.log( req.params.task_id)
+    db.query(`UPDATE task_list SET status = NOT status WHERE task_id = '${req.params.task_id}'`, (err, response) => {
       if (err) {
         console.log(err.stack);
       } else {
@@ -76,7 +79,7 @@ export default ({ config, db }) => {
 
   api.put("/updatetaskstatus/:task_id",(req,res)=>{
     console.log("body",req.body)
-    db.query(`UPDATE task_list SET task_completion = NOT status WHERE task_id = ${req.params.task_id}`, (err, response) => {
+    db.query(`UPDATE task_list SET task_completion = NOT status WHERE task_id = '${req.params.task_id}'`, (err, response) => {
       if (err) {
         console.log(err.stack);
       } else {
