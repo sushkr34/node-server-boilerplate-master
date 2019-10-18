@@ -13,4 +13,6 @@ const envVariables = {
 	BODY_LIMIT: "100kb",
 	CROS_HEADERS: ["Link"]
 };
+
 export default envVariables;
+

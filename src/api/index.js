@@ -6,7 +6,7 @@ export default ({ config, db }) => {
 
   api.get("/gettask", (req, res) => {
     //find id in company table and return the company
-    // "SELECT SUM(points)  from task_list where status = true group by user_id"
+    // "SELECT SUM(points)  from task_list where status = true group by uuid"
     db.query("SELECT *  from task_list where status = true " , (err, response) => {
       if (err) {
         console.log(err.stack);
@@ -35,12 +35,12 @@ export default ({ config, db }) => {
     //take company from req and insert into company table
      console.log("body", req.body);
     // const {name,address,phonenumber}=req.body;
-    const {task_name,points,month,week,user_id,task_id}=req.body;
+    const {task_name,points,month,week,uuid,task_id}=req.body;
     const uuidv1 = require('uuid/v1');
          const taskId =  uuidv1();
        const createdtime = new Date().getTime();  
        console.log(createdtime, "time stamp")
-    db.query(`insert into task_list values('${user_id}','${taskId}','${task_name}',${points},'${month}','${week}','2019', false,true,${createdtime})`, (err, response) => {
+    db.query(`insert into task_list values('${uuid}','${taskId}','${task_name}',${points},'${month}','${week}','2019', false,true,${createdtime})`, (err, response) => {
       if (err) {
         console.log(err.stack);
       } else {
@@ -54,8 +54,8 @@ export default ({ config, db }) => {
     //take company from req and insert into company table
      console.log("body", req.body);
     // const {name,address,phonenumber}=req.body;
-    const {month , week, user_id}=req.body;
-    db.query(` select * from task_list where month = '${month}' and week = '${week}' and status = true and user_id= '${user_id}' `, (err, response) => {
+    const {month , week, uuid}=req.body;
+    db.query(` select * from task_list where month = '${month}' and week = '${week}' and status = true and uuid= '${uuid}' `, (err, response) => {
       if (err) {
         console.log(err.stack);
       } else {
@@ -80,9 +80,9 @@ export default ({ config, db }) => {
   });
   api.post("/get_chart_points", (req, res) => {
     //find id in company table and return the company
-    // "SELECT SUM(points)  from task_list where status = true group by user_id"
+    // "SELECT SUM(points)  from task_list where status = true group by uuid"
     const {month , week}=req.body;
-    db.query(`SELECT user_id,SUM(points)  from task_list where  month = '${month}' and week = '${week}' and status = true group by user_id` , (err, response) => {
+    db.query(`SELECT uuid,SUM(points)  from task_list where  month = '${month}' and week = '${week}' and status = true group by uuid` , (err, response) => {
       if (err) {
         console.log(err.stack);
       } else {
