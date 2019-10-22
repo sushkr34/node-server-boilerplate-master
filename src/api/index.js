@@ -50,7 +50,7 @@ export default ({ config, db }) => {
     });
   });
 
-  
+
   api.post("/user_task_list", (req, res) => {
     //take company from req and insert into company table
      console.log("body", req.body);
@@ -93,6 +93,7 @@ export default ({ config, db }) => {
     });
 
 
+
   });
   
   
@@ -114,7 +115,7 @@ console.log( req.params.task_id)
 
   api.put("/updatetaskstatus/:task_id",(req,res)=>{
     console.log("body",req.body)
-    db.query(`UPDATE task_list SET task_completion = NOT status WHERE task_id = '${req.params.task_id}'`, (err, response) => {
+    db.query(`UPDATE task_list SET task_completion = NOT task_completion WHERE task_id = '${req.params.task_id}'`, (err, response) => {
       if (err) {
         console.log(err.stack);
       } else {
@@ -134,3 +135,6 @@ console.log( req.params.task_id)
   // });
   return api;
 };
+
+
+
