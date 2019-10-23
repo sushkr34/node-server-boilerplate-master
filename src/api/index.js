@@ -1,5 +1,9 @@
 import { version } from "../../package.json";
 import { Router } from "express";
+import Ajv from 'ajv';
+var ajv=new Ajv();
+import validateAddedTAsk from '../models/validateAddedTask';
+import validateMonthWeek from '../models/validateMonthWeek';
 
 export default ({ config, db }) => {
   let api = Router();
@@ -31,10 +35,17 @@ export default ({ config, db }) => {
   //   });
   // });
 
-  api.post("/addtask", (req, res) => {
+  api.post("/addtask", (req, res,next) => {
     //take company from req and insert into company table
      console.log("body", req.body);
     // const {name,address,phonenumber}=req.body;
+    const validate =ajv.compile(validateAddedTAsk);
+    const valid = validate(req.body)
+    if(!valid){
+      return next({Errors :validate.errors});
+    }
+
+
     const {task_name,points,month,week,uuid,task_id}=req.body;
     const uuidv1 = require('uuid/v1');
          const taskId =  uuidv1();
@@ -67,6 +78,7 @@ export default ({ config, db }) => {
   });
   api.post("/admin_view_task_list", (req, res) => {
     //take company from req and insert into company table
+    
     //  console.log("body", req.body);
     // const {name,address,phonenumber}=req.body;
     const {month , week}=req.body;
