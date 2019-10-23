@@ -10,8 +10,9 @@ export default ({ config, db }) => {
 
   api.get("/gettask", (req, res) => {
     //find id in company table and return the company
+
     // "SELECT SUM(points)  from task_list where status = true group by uuid"
-    db.query("SELECT *  from task_list where status = true order by task_completion " , (err, response) => {
+    db.query("SELECT *  from task_list where status = true  " , (err, response) => {
       if (err) {
         console.log(err.stack);
       } else {
@@ -82,7 +83,7 @@ export default ({ config, db }) => {
     //  console.log("body", req.body);
     // const {name,address,phonenumber}=req.body;
     const {month , week}=req.body;
-    db.query(` select * from task_list where month = '${month}' and week = '${week}' and status = true  `, (err, response) => {
+    db.query(` select * from task_list where month = '${month}' and week = '${week}' and status = true order by uuid `, (err, response) => {
       if (err) {
         console.log(err.stack);
       } else {
