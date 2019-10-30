@@ -10,7 +10,7 @@ const validateAddedTask={
         },
         "points": {
             "description": "Points should be eneterd ",
-            "type": "integer",
+            "type":["integer","string"],
             "minimum":2,
             "maximum":10
         }

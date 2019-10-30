@@ -46,6 +46,7 @@ export default ({ config, db }) => {
       return next({Errors :validate.errors});
     }
 
+    
 
     const {task_name,points,month,week,uuid,task_id}=req.body;
     const uuidv1 = require('uuid/v1');
