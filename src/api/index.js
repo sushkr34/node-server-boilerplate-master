@@ -82,6 +82,7 @@ export default ({ config, db }) => {
     
     //  console.log("body", req.body);
     // const {name,address,phonenumber}=req.body;
+    
     const {month , week}=req.body;
     db.query(` select * from task_list where month = '${month}' and week = '${week}' and status = true order by uuid `, (err, response) => {
       if (err) {

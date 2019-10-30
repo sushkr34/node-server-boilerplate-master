@@ -5,8 +5,8 @@ const validateAddedTask={
     "properties":{
         "task_name": {
             "description": "It should be text or Integer ",
-            "type": ["string","integer"],
-            "minLength":5
+            "type": ["string","integer"]
+            
         },
         "points": {
             "description": "Points should be eneterd ",
